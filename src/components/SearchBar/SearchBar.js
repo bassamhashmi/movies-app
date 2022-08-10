@@ -1,48 +1,25 @@
 import React from "react";
 import { useMoviesDataContext } from "../../context/moviesDataContext";
-import { useIsSearchingContext } from "../../context/isSearchingContext";
 import { Button, InputGroup, Form } from "react-bootstrap";
 
 const SearchBar = () => {
-  const [isSearching, handleIsSearchingToggle] = useIsSearchingContext();
-  const [moviesData, handleMoviesDataChange] = useMoviesDataContext();
+  const [{ MoviesDataJSON }, { handleMoviesDataChange }] =
+    useMoviesDataContext();
   const [searchInput, setSearchInput] = React.useState("");
+
+  React.useEffect(() => {
+    const moviesSearched = [...MoviesDataJSON].filter((movie) =>
+      movie.title.toLowerCase().startsWith(searchInput.toLowerCase())
+    );
+    handleMoviesDataChange(moviesSearched);
+  }, [searchInput]);
 
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
-
-    if (!isSearching && searchInput !== "") {
-      handleIsSearchingToggle(true);
-    }
-
-    if (searchInput !== "") {
-      console.log("1");
-      const moviesSearched = [...moviesData].filter((movie) =>
-        movie.title.toLowerCase().startsWith(searchInput.toLowerCase())
-      );
-      handleMoviesDataChange(moviesSearched);
-    }
-
-    return;
   };
 
   const handleClearInput = () => {
     setSearchInput("");
-    return;
-  };
-
-  const handleSearchMovie = () => {
-    if (!isSearching && searchInput !== "") {
-      handleIsSearchingToggle(true);
-    }
-
-    if (searchInput !== "") {
-      const moviesSearched = [...moviesData].filter((movie) =>
-        movie.title.toLowerCase().startsWith(searchInput.toLowerCase())
-      );
-      handleMoviesDataChange(moviesSearched);
-    }
-    return;
   };
 
   return (
@@ -62,14 +39,6 @@ const SearchBar = () => {
           Clear
         </Button>
       ) : null}
-
-      <Button
-        variant="outline-primary"
-        id="btnSearch"
-        onClick={handleSearchMovie}
-      >
-        Search
-      </Button>
     </InputGroup>
   );
 };

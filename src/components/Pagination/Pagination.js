@@ -8,27 +8,23 @@ import React from "react";
 import { Pagination as PaginationReactBootstrap } from "react-bootstrap";
 
 const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
-  const pageNumbers = [];
+  const pages = new Array(Math.ceil(totalItems / itemsPerPage)).fill(0);
 
-  for (
-    let number = 1;
-    number <= Math.ceil(totalItems / itemsPerPage);
-    number++
-  ) {
-    pageNumbers.push(
-      <PaginationReactBootstrap.Item
-        key={number}
-        active={number === currentPage}
-        onClick={() => paginate(number)}
-      >
-        {number}
-      </PaginationReactBootstrap.Item>
-    );
-  }
   return (
     <div>
       <PaginationReactBootstrap className="justify-content-center" size="md">
-        {pageNumbers}
+        {pages.map((_value, index) => {
+          const number = index + 1;
+          return (
+            <PaginationReactBootstrap.Item
+              key={number}
+              active={number === currentPage}
+              onClick={() => paginate(number)}
+            >
+              {number}
+            </PaginationReactBootstrap.Item>
+          );
+        })}
       </PaginationReactBootstrap>
     </div>
   );

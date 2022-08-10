@@ -8,7 +8,7 @@ import ConfirmationModal from "../Modal/ConfirmationModal";
 
 const Movies = () => {
   const [activeGenre] = useActiveGenreContext();
-  const [moviesData, handleMoviesDataChange] = useMoviesDataContext();
+  const [{ moviesData }, { handleMoviesDataChange }] = useMoviesDataContext();
   const [deleteModal, setDeleteModal] = React.useState({
     isVisible: false,
     targetId: null,
@@ -28,12 +28,18 @@ const Movies = () => {
   });
 
   //////////// Pagination ////////////
-  const indexOfLastMovie = currentPage * moviesPerPage;
-  const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
+  const indexOfFirstMovie = currentPage * moviesPerPage - moviesPerPage;
+  const indexOfLastMovie = currentPage * moviesPerPage - 1;
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const totalMovies = filterMovies.length;
   // paginating
-  const moviesToShow = filterMovies.splice(indexOfFirstMovie, indexOfLastMovie);
+  const moviesToShow = filterMovies.filter((_movie, index) => {
+    if (index >= indexOfFirstMovie && index <= indexOfLastMovie) {
+      return true;
+    }
+
+    return false;
+  });
 
   //////////// Sort ////////////
   const handleSortOrder = (colPath) => {

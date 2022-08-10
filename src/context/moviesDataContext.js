@@ -12,8 +12,10 @@ function MoviesDataProvider({ children }) {
   };
 
   return (
-    <CreateMoviesDataContext.Provider value={moviesData}>
-      <CreateMoviesDataDispatchContext.Provider value={handleMoviesDataChange}>
+    <CreateMoviesDataContext.Provider value={{ moviesData, MoviesDataJSON }}>
+      <CreateMoviesDataDispatchContext.Provider
+        value={{ handleMoviesDataChange }}
+      >
         {children}
       </CreateMoviesDataDispatchContext.Provider>
     </CreateMoviesDataContext.Provider>
