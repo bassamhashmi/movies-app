@@ -6,7 +6,7 @@ import MoviesTable from "./MoviesTable";
 import Pagination from "../Pagination/Pagination";
 import ConfirmationModal from "../Modal/ConfirmationModal";
 
-const Movies = () => {
+const Movies = ({ handleGoBack }) => {
   const [activeGenre] = useActiveGenreContext();
   const [moviesData, handleMoviesDataChange] = useMoviesDataContext();
   const [deleteModal, setDeleteModal] = React.useState({
@@ -44,6 +44,18 @@ const Movies = () => {
   };
 
   const sortMovies = (orderBy, colPath) => {
+    if (colPath === "genre") {
+      orderBy === "Ascending"
+        ? moviesData.sort((prevMovie, nextMovie) =>
+            prevMovie.genre.name > nextMovie.genre.name ? 1 : -1
+          )
+        : moviesData.sort((prevMovie, nextMovie) =>
+            prevMovie.genre.name < nextMovie.genre.name ? 1 : -1
+          );
+      handleMoviesDataChange(moviesData);
+      return;
+    }
+
     orderBy === "Ascending"
       ? moviesData.sort((prevMovie, nextMovie) =>
           prevMovie[colPath] > nextMovie[colPath] ? 1 : -1

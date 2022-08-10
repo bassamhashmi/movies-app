@@ -11,6 +11,18 @@ const SearchBar = () => {
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
 
+    if (!isSearching && searchInput !== "") {
+      handleIsSearchingToggle(true);
+    }
+
+    if (searchInput !== "") {
+      console.log("1");
+      const moviesSearched = [...moviesData].filter((movie) =>
+        movie.title.toLowerCase().startsWith(searchInput.toLowerCase())
+      );
+      handleMoviesDataChange(moviesSearched);
+    }
+
     return;
   };
 

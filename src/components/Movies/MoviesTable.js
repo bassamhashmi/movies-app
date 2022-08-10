@@ -34,12 +34,12 @@ const MoviesTable = ({
           </OverlayTrigger>
           <OverlayTrigger
             placement="top"
-            delay={{ show: 250, hide: 400 }}
+            delay={{ show: 250, hide: 100 }}
             overlay={renderTooltip}
           >
             <th
               className="col-2"
-              onClick={() => handleSortOrder("genre.name")}
+              onClick={() => handleSortOrder("genre")}
               style={{ cursor: "pointer" }}
             >
               Genre
