@@ -20,7 +20,7 @@ const MoviesTable = ({
         <tr>
           <OverlayTrigger
             placement="top"
-            delay={{ show: 250, hide: 400 }}
+            delay={{ show: 250, hide: 100 }}
             overlay={renderTooltip}
             style={{ color: "yellow" }}
           >
@@ -47,7 +47,7 @@ const MoviesTable = ({
           </OverlayTrigger>
           <OverlayTrigger
             placement="top"
-            delay={{ show: 250, hide: 400 }}
+            delay={{ show: 250, hide: 100 }}
             overlay={renderTooltip}
           >
             <th
@@ -60,7 +60,7 @@ const MoviesTable = ({
           </OverlayTrigger>
           <OverlayTrigger
             placement="top"
-            delay={{ show: 250, hide: 400 }}
+            delay={{ show: 250, hide: 100 }}
             overlay={renderTooltip}
           >
             <th

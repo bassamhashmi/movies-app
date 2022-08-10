@@ -6,7 +6,7 @@ import MoviesTable from "./MoviesTable";
 import Pagination from "../Pagination/Pagination";
 import ConfirmationModal from "../Modal/ConfirmationModal";
 
-const Movies = ({ handleGoBack }) => {
+const Movies = () => {
   const [activeGenre] = useActiveGenreContext();
   const [moviesData, handleMoviesDataChange] = useMoviesDataContext();
   const [deleteModal, setDeleteModal] = React.useState({
