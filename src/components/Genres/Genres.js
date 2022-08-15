@@ -1,8 +1,9 @@
 import React from "react";
 import { Tab, ListGroup } from "react-bootstrap";
 import { useActiveGenreContext } from "../../context/activeGenreContext";
+import GenresDataJSON from "../../data/genres.json";
 
-const Genres = ({ GenresDataJSON }) => {
+const Genres = () => {
   const [activeGenre, handleActiveGenreChange] = useActiveGenreContext();
 
   const handleShowAllMovies = () => {

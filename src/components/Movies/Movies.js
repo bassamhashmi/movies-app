@@ -8,13 +8,15 @@ import ConfirmationModal from "../Modal/ConfirmationModal";
 
 const Movies = () => {
   const [activeGenre] = useActiveGenreContext();
-  const [{ moviesData }, { handleMoviesDataChange }] = useMoviesDataContext();
+  const [{ moviesData, MoviesDataJSON }, { handleMoviesDataChange }] =
+    useMoviesDataContext();
+  const [searchInput, setSearchInput] = React.useState("");
+  const [orderBy, setOrderBy] = React.useState("Ascending");
+  const [directDeleteMovie, setDirectDeleteMovie] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState({
     isVisible: false,
     targetId: null,
   });
-  const [orderBy, setOrderBy] = React.useState("Ascending");
-  const [directDeleteMovie, setDirectDeleteMovie] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [moviesPerPage] = React.useState(4);
 
@@ -27,19 +29,15 @@ const Movies = () => {
     return movie.genre._id === activeGenre.id;
   });
 
-  //////////// Pagination ////////////
-  const indexOfFirstMovie = currentPage * moviesPerPage - moviesPerPage;
-  const indexOfLastMovie = currentPage * moviesPerPage - 1;
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const totalMovies = filterMovies.length;
-  // paginating
-  const moviesToShow = filterMovies.filter((_movie, index) => {
-    if (index >= indexOfFirstMovie && index <= indexOfLastMovie) {
-      return true;
-    }
+  //////////// Search ////////////
 
-    return false;
-  });
+  const handleSearchInputChange = (event) => {
+    setSearchInput(event.target.value);
+  };
+
+  const handleClearInput = () => {
+    setSearchInput("");
+  };
 
   //////////// Sort ////////////
   const handleSortOrder = (colPath) => {
@@ -75,8 +73,9 @@ const Movies = () => {
   };
 
   //////////// Delete ////////////
-  const deleteMovie = (id) =>
+  const deleteMovie = (id) => {
     handleMoviesDataChange(moviesData.filter((movie) => movie._id !== id));
+  };
 
   const handleDeleteMovie = (id) => {
     if (!directDeleteMovie) {
@@ -119,13 +118,37 @@ const Movies = () => {
     return;
   };
 
+  //////////// Pagination ////////////
+  const indexOfFirstMovie = currentPage * moviesPerPage - moviesPerPage;
+  const indexOfLastMovie = currentPage * moviesPerPage - 1;
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const totalMovies = filterMovies.length;
+
+  const searchedFiltered = filterMovies.filter((movie) =>
+    movie.title.toLowerCase().startsWith(searchInput.toLowerCase())
+  );
+  // paginating
+  const moviesToShow = searchedFiltered.filter((_movie, index) => {
+    if (index >= indexOfFirstMovie && index <= indexOfLastMovie) {
+      return true;
+    }
+
+    return false;
+  });
+
   ///////////////////////////////
 
   return (
     <>
-      <p>Showing {moviesData.length} movies in the database.</p>
+      <p className="mt-4 text-md-right text-center">
+        Showing {moviesData.length} movies in the database.
+      </p>
 
-      <SearchBar />
+      <SearchBar
+        searchInput={searchInput}
+        handleSearchInputChange={handleSearchInputChange}
+        handleClearInput={handleClearInput}
+      />
 
       <MoviesTable
         moviesToShow={moviesToShow}
