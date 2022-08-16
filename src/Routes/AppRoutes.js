@@ -8,13 +8,15 @@ import LoginPage from "../pages/Login";
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route index element={<Home />} />
-
-      <Route path="/login" element={<LoginPage />} />
-
-      <Route replace element={<AuthRoute />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Route>
+      <Route index element={<LoginPage />} />
+      <Route
+        path="dashboard"
+        element={
+          <AuthRoute>
+            <Dashboard />
+          </AuthRoute>
+        }
+      />
     </Routes>
   );
 }
