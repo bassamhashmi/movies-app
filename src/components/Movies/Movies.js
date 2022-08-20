@@ -5,17 +5,21 @@ import SearchBar from "../SearchBar/SearchBar";
 import MoviesTable from "./MoviesTable";
 import Pagination from "../Pagination/Pagination";
 import ConfirmationModal from "../Modal/ConfirmationModal";
+import EditMovie from "./EditMovie";
 
 const Movies = () => {
-  const [activeGenre] = useActiveGenreContext();
-  const [{ moviesData, MoviesDataJSON }, { handleMoviesDataChange }] =
-    useMoviesDataContext();
+  const [activeGenre, _handleActiveGenreChange] = useActiveGenreContext();
+  const [moviesData, { handleMoviesDataChange }] = useMoviesDataContext();
   const [searchInput, setSearchInput] = React.useState("");
   const [orderBy, setOrderBy] = React.useState("Ascending");
   const [directDeleteMovie, setDirectDeleteMovie] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState({
     isVisible: false,
     targetId: null,
+  });
+  const [editMovieDetails, setEditMovieDetails] = React.useState();
+  const [showEditModal, setShowEditModal] = React.useState({
+    isVisible: false,
   });
   const [currentPage, setCurrentPage] = React.useState(1);
   const [moviesPerPage] = React.useState(4);
@@ -30,7 +34,6 @@ const Movies = () => {
   });
 
   //////////// Search ////////////
-
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
   };
@@ -136,42 +139,73 @@ const Movies = () => {
     return false;
   });
 
+  //////////// Edit Movie ////////////
+  const handleEditMovie = (movie) => {
+    setEditMovieDetails(movie);
+
+    setShowEditModal({
+      isVisible: true,
+    });
+  };
+
+  const handleCloseModal = () => {
+    setShowEditModal({
+      isVisible: false,
+    });
+  };
+
   ///////////////////////////////
 
   return (
     <>
-      <p className="mt-4 text-md-right text-center">
-        Showing {moviesData.length} movies in the database.
-      </p>
+      {filterMovies.length === 0 ? (
+        <p className="mt-4 text-md-right text-center">
+          No movies available in the database!
+        </p>
+      ) : (
+        <>
+          <p className="mt-4 text-md-right text-center">
+            Showing {filterMovies.length} movies in the database.
+          </p>
 
-      <SearchBar
-        searchInput={searchInput}
-        handleSearchInputChange={handleSearchInputChange}
-        handleClearInput={handleClearInput}
-      />
+          <SearchBar
+            placeholder="Search movie by title"
+            searchInput={searchInput}
+            handleSearchInputChange={handleSearchInputChange}
+            handleClearInput={handleClearInput}
+          />
 
-      <MoviesTable
-        moviesToShow={moviesToShow}
-        handleSortOrder={handleSortOrder}
-        handleDeleteMovie={handleDeleteMovie}
-        orderBy={orderBy}
-      />
+          <MoviesTable
+            moviesToShow={moviesToShow}
+            orderBy={orderBy}
+            handleSortOrder={handleSortOrder}
+            handleDeleteMovie={handleDeleteMovie}
+            handleEditMovie={handleEditMovie}
+          />
 
-      <Pagination
-        itemsPerPage={moviesPerPage}
-        totalItems={totalMovies}
-        paginate={paginate}
-        currentPage={currentPage}
-      />
+          <Pagination
+            itemsPerPage={moviesPerPage}
+            totalItems={totalMovies}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
 
-      <ConfirmationModal
-        modalTitle="Delete Movie"
-        modalDescription="Are you sure you want to delete this movie?"
-        showModal={deleteModal}
-        handleBtnClose={handleBtnCloseDeleteModal}
-        handleBtnConfirm={handleBtnConfirmDelete}
-        handleRememberIsChecked={handleDirectDeleteMovieIsChecked}
-      />
+          <ConfirmationModal
+            modalTitle="Delete Movie"
+            modalDescription="Are you sure you want to delete this movie?"
+            showModal={deleteModal}
+            handleBtnClose={handleBtnCloseDeleteModal}
+            handleBtnConfirm={handleBtnConfirmDelete}
+            handleRememberIsChecked={handleDirectDeleteMovieIsChecked}
+          />
+
+          <EditMovie
+            showModal={showEditModal}
+            handleCloseModal={handleCloseModal}
+            currentMovie={editMovieDetails}
+          />
+        </>
+      )}
     </>
   );
 };

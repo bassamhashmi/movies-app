@@ -1,11 +1,11 @@
 import React from "react";
-import { Tab, ListGroup } from "react-bootstrap";
+import { useGenresDataContext } from "../../context/genresDataContext";
 import { useActiveGenreContext } from "../../context/activeGenreContext";
-import GenresDataJSON from "../../data/genres.json";
+import { Tab, ListGroup } from "react-bootstrap";
 
 const Genres = () => {
-  const [activeGenre, handleActiveGenreChange] = useActiveGenreContext();
-
+  const [activeGenre, { handleActiveGenreChange }] = useActiveGenreContext();
+  const [genresData, _handleGenresDataChange] = useGenresDataContext();
   const handleShowAllMovies = () => {
     handleActiveGenreChange({
       name: "All Movies",
@@ -36,7 +36,7 @@ const Genres = () => {
         >
           All Movies
         </ListGroup.Item>
-        {GenresDataJSON.map((genre) => {
+        {genresData.map((genre) => {
           return (
             <ListGroup.Item
               as="li"

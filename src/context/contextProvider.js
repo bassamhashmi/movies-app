@@ -1,14 +1,17 @@
 import React from "react";
-import { ActiveGenreProvider } from "./activeGenreContext";
 import { AuthProvider } from "./authContext";
+import { GenresDataProvider } from "./genresDataContext";
+import { ActiveGenreProvider } from "./activeGenreContext";
 import { MoviesDataProvider } from "./moviesDataContext";
 
 export default function ContextProvider({ children }) {
   return (
     <AuthProvider>
-      <ActiveGenreProvider>
-        <MoviesDataProvider>{children}</MoviesDataProvider>
-      </ActiveGenreProvider>
+      <GenresDataProvider>
+        <ActiveGenreProvider>
+          <MoviesDataProvider>{children}</MoviesDataProvider>
+        </ActiveGenreProvider>
+      </GenresDataProvider>
     </AuthProvider>
   );
 }

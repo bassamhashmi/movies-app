@@ -1,10 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { CssBaseline, Paper, Box, Grid, Typography } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Button } from "@mui/material";
 
 const theme = createTheme();
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -42,6 +46,16 @@ const Home = () => {
             <Typography component="h3" variant="h5">
               Yet to be designed
             </Typography>
+            <Button
+              onClick={() => {
+                navigate("/dashboard");
+              }}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Go to dashboard
+            </Button>
           </Box>
         </Grid>
       </Grid>

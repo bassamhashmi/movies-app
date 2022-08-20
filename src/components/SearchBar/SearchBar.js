@@ -1,7 +1,14 @@
+/*
+
+  Reusable Component
+  
+*/
+
 import React from "react";
 import { Button, InputGroup, Form } from "react-bootstrap";
 
 const SearchBar = ({
+  placeholder,
   searchInput,
   handleSearchInputChange,
   handleClearInput,
@@ -11,7 +18,7 @@ const SearchBar = ({
       <Form.Control
         value={searchInput}
         onChange={handleSearchInputChange}
-        placeholder="Search movie by title"
+        placeholder={placeholder}
       />
       {searchInput ? (
         <Button

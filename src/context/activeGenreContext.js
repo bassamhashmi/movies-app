@@ -16,7 +16,7 @@ function ActiveGenreProvider({ children }) {
   return (
     <CreateActiveGenreContext.Provider value={activeGenre}>
       <CreateActiveGenreDispatchContext.Provider
-        value={handleActiveGenreChange}
+        value={{ handleActiveGenreChange }}
       >
         {children}
       </CreateActiveGenreDispatchContext.Provider>

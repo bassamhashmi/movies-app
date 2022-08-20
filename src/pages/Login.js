@@ -45,6 +45,10 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  React.useEffect(() => {
+    alert("Email: 123 || Password: 123");
+  }, []);
+
   const handleEmailChange = (event) => {
     setUserEmail(event.currentTarget.value);
   };
@@ -53,7 +57,7 @@ export default function LoginPage() {
   };
 
   const handleAuthentication = () => {
-    if (userEmail === "bassamhashmi7@gmail.com" && userPassword === "123456") {
+    if (userEmail === "123" && userPassword === "123") {
       if (location.state?.from) {
         navigate(location.state.from);
       }
