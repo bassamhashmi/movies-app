@@ -21,10 +21,7 @@ const AddNewMovie = ({ addNewMovieModal, closeAddNewMovieModal }) => {
   };
 
   const handleGenreChange = (event) => {
-    if (
-      event.target.value === "selectGenre"
-      // event.target.value === "addNewGenre"
-    ) {
+    if (event.target.value === "selectGenre") {
       console.log("Please Select Genre");
       setGenre("");
       return;

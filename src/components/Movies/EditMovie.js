@@ -35,10 +35,7 @@ const EditMovie = ({ currentMovie, showModal, handleCloseModal }) => {
   };
 
   const handleGenreChange = (event) => {
-    if (
-      event.target.value === "selectGenre" ||
-      event.target.value === "addNewGenre"
-    ) {
+    if (event.target.value === "selectGenre") {
       alert("Please Select Genre");
       return;
     }

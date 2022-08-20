@@ -65,9 +65,6 @@ const MovieForm = ({
                       </option>
                     );
                   })}
-                  <option value="addNewGenre" id="1">
-                    ~ Add New Genre ~
-                  </option>
                 </Form.Select>
               </FloatingLabel>
             </Form.Group>

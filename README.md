@@ -103,11 +103,7 @@ _Installing and setting up your app._
    ```sh
    git clone https://github.com/bassamhashmi/movies-app.git
    ```
-2. Install NPM React-Bootstrap packages
-   ```sh
-   npm install react-bootstrap bootstrap
-   ```
-3. Start the project
+2. Start the project
    ```sh
    npm start
    ```
